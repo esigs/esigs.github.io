@@ -49,7 +49,12 @@
 (defn- page-footer
   "Build the footer section as hiccup."
   [context]
-  [:footer ])
+  [:footer
+   [:hr]
+   [:div.author-bio
+    [:h3 "About Eric"]
+    [:p "I'm a software developer passionate about building bridges between legacy systems and modern technology. I work with Clojure and .NET/C#, focusing on clean architecture and practical solutions to real-world problems."]
+    [:p [:a {:href "https://www.linkedin.com/in/ericronaldsigurdson/" :target "_blank" :rel "noopener noreferrer"} "Connect with me on LinkedIn"] " to discuss legacy system modernization, AI integration, or anything related to software architecture."]]])
 
 (defn- posts-list
   "Build a list of blog posts as hiccup."
@@ -66,16 +71,6 @@
             [:time {:datetime (:date post)} (:date post)])
           (when (:description post)
             [:p (:description post)])]])]]))
-
-(defn- post-footer
-  "Build the post-specific footer with author bio."
-  [context]
-  [:section.post-footer
-   [:hr]
-   [:div.author-bio
-    [:h3 "About Eric"]
-    [:p "I'm a software developer passionate about building bridges between legacy systems and modern technology. I work with Clojure and .NET/C#, focusing on clean architecture and practical solutions to real-world problems."]
-    [:p [:a {:href "https://www.linkedin.com/in/ericronaldsigurdson/" :target "_blank" :rel "noopener noreferrer"} "Connect with me on LinkedIn"] " to discuss legacy system modernization, AI integration, or anything related to software architecture."]]])
 
 ;; Rendering functions
 
@@ -113,6 +108,5 @@
         article-hiccup [:article
                         [:h1 title]
                         (when date [:time {:datetime date} date])
-                        content-hiccup
-                        (post-footer context)]]
+                        content-hiccup]]
     (render-page (assoc context :content-hiccup article-hiccup))))
