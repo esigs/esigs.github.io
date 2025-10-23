@@ -35,11 +35,38 @@ The shell automatically sets `APP_ENV=DEV` and provides a `claude` alias for `np
 
 ### REPL and Development
 ```bash
-# Start a Clojure REPL
-clj -M:repl
-
-# Start REPL with development profile
+# Start a Clojure REPL with development profile
 clj -M:dev
+
+# Start nREPL server (for editor integration)
+clj -M:dev:nrepl
+
+# Connect to nREPL and load developer namespace
+clj -M:dev
+# Then in the REPL:
+(require 'eric)
+```
+
+### Developer REPL Commands
+
+The `eric.clj` file in `development/src/` provides convenient REPL commands:
+
+```clojure
+;; Generate the full site
+(generator/generate-site
+ {:content-dir "content"
+  :output-dir "public"
+  :static-dir "static"
+  :site-config {:site-title "My Site"
+                :css ["/css/style.css"]}})
+
+;; Quick generate with defaults
+(generator/generate-site {})
+
+;; Test individual components
+(parser/parse "---\ntitle: Test\n---\nHello **world**")
+(renderer/markdown->hiccup "# Hello\n\nThis is a **test**")
+(files/list-files "content" {:extension ".md"})
 ```
 
 ### Polylith Commands
@@ -111,9 +138,11 @@ The workspace is configured with:
 Project dependencies are managed in `deps.edn`:
 - Clojure 1.11.1
 - Polylith CLI tools 0.2.21
-- Replicant (no.cjohansen/replicant) - HTML rendering library
-- markdown-clj - Markdown to HTML conversion
-- tools.cli - Command-line argument parsing
+- Hiccup 1.0.5 - HTML rendering library (hiccup data structures to HTML)
+- markdown-to-hiccup 0.6.2 - Markdown to hiccup conversion
+- io.forward/yaml 1.0.11 - YAML parsing for frontmatter
+- tools.cli 1.1.230 - Command-line argument parsing
+- nREPL 1.3.1 - REPL server for editor integration
 
 ## Static Site Generator
 
@@ -121,15 +150,15 @@ This workspace contains a complete static site generator built using the Polylit
 
 ### Components
 
-- **markdown-parser** - Parses markdown files with YAML frontmatter. Implements a simple YAML parser for extracting metadata (title, date, description, layout).
+- **markdown-parser** - Parses markdown files with YAML frontmatter using io.forward/yaml. Extracts metadata (title, date, description, layout) and content.
 
-- **html-renderer** - Converts markdown to HTML using markdown-clj.
+- **html-renderer** - Converts markdown to hiccup data structures using markdown-to-hiccup library.
 
-- **template** - Provides layout functions for rendering pages. Uses Replicant for server-side HTML rendering from hiccup data structures.
+- **template** - Provides layout functions for rendering pages. Uses Hiccup's `html5` function for server-side HTML rendering from pure hiccup data structures (includes DOCTYPE automatically).
 
 - **file-utils** - File system operations including reading/writing files, directory traversal, copying static assets.
 
-- **site-generator** - Orchestrates the entire site generation process, combining all other components.
+- **site-generator** - Orchestrates the entire site generation process following the Stasis pattern (URL -> content-fn maps with context-based rendering).
 
 ### Base
 
@@ -138,11 +167,23 @@ This workspace contains a complete static site generator built using the Polylit
 ### Running the Static Site Generator
 
 ```bash
-# Using explicit paths (recommended for development)
-clj -Sdeps '{:paths ["projects/website/src" "bases/generate-site/src" "components/markdown-parser/src" "components/html-renderer/src" "components/template/src" "components/file-utils/src" "components/site-generator/src"]}' -M -m ca.ericsigurdson.generate-site.core -c content -o public -s static
+# Generate site with default options
+clj -M:dev -m ca.ericsigurdson.generate-site.core
+
+# Generate with custom options
+clj -M:dev -m ca.ericsigurdson.generate-site.core \
+  -c content \
+  -o public \
+  -s static \
+  -t "My Site Title"
 
 # Show help
-clj -M -m ca.ericsigurdson.generate-site.core --help
+clj -M:dev -m ca.ericsigurdson.generate-site.core --help
+
+# From REPL (recommended for development)
+clj -M:dev
+(require 'eric)
+(generator/generate-site {})
 ```
 
 ### Site Structure
@@ -179,7 +220,9 @@ Your markdown content here...
 ### Architecture Notes
 
 - Components do not declare dependencies on other components in their `deps.edn` files
-- Dependencies between bricks are managed at the project level in `projects/website/deps.edn`
+- Dependencies between bricks are managed in the root `deps.edn` under the `:dev` alias with `:local/root` references
 - External library dependencies are declared in the root `deps.edn`
-- Replicant is used for server-side rendering, converting hiccup data structures to HTML strings
-- HTML from markdown is directly embedded in templates to avoid escaping issues
+- Hiccup's `html5` function is used for server-side rendering, converting pure hiccup data structures to HTML strings with DOCTYPE
+- Markdown is converted to hiccup data structures (not HTML strings), maintaining data-first approach throughout
+- Context-aware URL resolution handles relative paths for nested pages automatically
+- Follows the Stasis pattern: pages are discovered as URL -> content-fn maps, rendered lazily with context
