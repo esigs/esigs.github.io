@@ -111,3 +111,75 @@ The workspace is configured with:
 Project dependencies are managed in `deps.edn`:
 - Clojure 1.11.1
 - Polylith CLI tools 0.2.21
+- Replicant (no.cjohansen/replicant) - HTML rendering library
+- markdown-clj - Markdown to HTML conversion
+- tools.cli - Command-line argument parsing
+
+## Static Site Generator
+
+This workspace contains a complete static site generator built using the Polylith architecture.
+
+### Components
+
+- **markdown-parser** - Parses markdown files with YAML frontmatter. Implements a simple YAML parser for extracting metadata (title, date, description, layout).
+
+- **html-renderer** - Converts markdown to HTML using markdown-clj.
+
+- **template** - Provides layout functions for rendering pages. Uses Replicant for server-side HTML rendering from hiccup data structures.
+
+- **file-utils** - File system operations including reading/writing files, directory traversal, copying static assets.
+
+- **site-generator** - Orchestrates the entire site generation process, combining all other components.
+
+### Base
+
+- **generate-site** - CLI application that invokes the site generator. Accepts command-line arguments for content directory, output directory, static assets directory, and site configuration.
+
+### Running the Static Site Generator
+
+```bash
+# Using explicit paths (recommended for development)
+clj -Sdeps '{:paths ["projects/website/src" "bases/generate-site/src" "components/markdown-parser/src" "components/html-renderer/src" "components/template/src" "components/file-utils/src" "components/site-generator/src"]}' -M -m ca.ericsigurdson.generate-site.core -c content -o public -s static
+
+# Show help
+clj -M -m ca.ericsigurdson.generate-site.core --help
+```
+
+### Site Structure
+
+```
+content/           # Markdown source files
+  index.md        # Home page
+  about.md        # About page
+  posts/          # Blog posts
+    *.md
+static/           # Static assets (CSS, images, etc.)
+  css/
+    style.css
+public/           # Generated site (output)
+```
+
+### Markdown File Format
+
+Markdown files support YAML frontmatter:
+
+```markdown
+---
+title: Page Title
+description: Page description for meta tags
+date: 2025-10-23
+layout: page  # or "post" for blog posts
+---
+
+# Content
+
+Your markdown content here...
+```
+
+### Architecture Notes
+
+- Components do not declare dependencies on other components in their `deps.edn` files
+- Dependencies between bricks are managed at the project level in `projects/website/deps.edn`
+- External library dependencies are declared in the root `deps.edn`
+- Replicant is used for server-side rendering, converting hiccup data structures to HTML strings
+- HTML from markdown is directly embedded in templates to avoid escaping issues

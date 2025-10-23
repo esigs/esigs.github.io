@@ -1,0 +1,10 @@
+{:deps {org.clojure/clojure {:mvn/version "1.11.1"}
+         ca.ericsigurdson/markdown-parser {:local/root "../../components/markdown-parser"}
+         ca.ericsigurdson/html-renderer {:local/root "../../components/html-renderer"}
+         ca.ericsigurdson/template {:local/root "../../components/template"}
+         ca.ericsigurdson/file-utils {:local/root "../../components/file-utils"}
+         ca.ericsigurdson/site-generator {:local/root "../../components/site-generator"}
+         ca.ericsigurdson/generate-site {:local/root "../../bases/generate-site"}}
+
+ :aliases {:test {:extra-paths []
+                  :extra-deps  {}}}}
