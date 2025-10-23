@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-300 0 1500 950" style="background: #ffffff; font-family: 'Inter', -apple-system, system-ui, sans-serif;">
+  <!-- Title -->
+  <text x="600" y="40" font-size="28" font-weight="700" text-anchor="middle" fill="#1a1a1a">
+    AI + PowerBroker Architecture
+  </text>
+  <text x="600" y="70" font-size="16" text-anchor="middle" fill="#666">
+    How we made 30-year-old insurance data accessible to AI agents
+  </text>
+  
+  <!-- AI Agents Layer -->
+  <g id="ai-layer">
+    <rect x="50" y="120" width="280" height="120" rx="8" fill="#E3F2FD" stroke="#1976D2" stroke-width="2"/>
+    <text x="190" y="150" font-size="16" font-weight="600" text-anchor="middle" fill="#1976D2">
+      AI Agents
+    </text>
+    
+    <!-- Claude -->
+    <rect x="70" y="170" width="110" height="50" rx="6" fill="#fff" stroke="#1976D2" stroke-width="1.5"/>
+    <text x="125" y="200" font-size="14" font-weight="500" text-anchor="middle" fill="#333">
+      Claude
+    </text>
+    
+    <!-- ChatGPT -->
+    <rect x="200" y="170" width="110" height="50" rx="6" fill="#fff" stroke="#1976D2" stroke-width="1.5"/>
+    <text x="255" y="200" font-size="14" font-weight="500" text-anchor="middle" fill="#333">
+      ChatGPT
+    </text>
+  </g>
+  
+  <!-- Arrow down -->
+  <path d="M 190 240 L 190 290" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="210" y="270" font-size="12" fill="#666">Natural Language</text>
+  
+  <!-- RESTful API Box (Left side) -->
+  <g id="rest-api">
+    <rect x="50" y="300" width="130" height="80" rx="8" fill="#E1F5FE" stroke="#0288D1" stroke-width="2"/>
+    <text x="115" y="330" font-size="14" font-weight="600" text-anchor="middle" fill="#0288D1">
+      REST API
+    </text>
+    <text x="115" y="350" font-size="10" text-anchor="middle" fill="#666">
+      Traditional HTTP
+    </text>
+    <text x="115" y="365" font-size="10" text-anchor="middle" fill="#999">
+      Reporting Tools
+    </text>
+  </g>
+  
+  <!-- Arrow left from REST to Reporting Tools -->
+  <path d="M 50 340 L -70 340" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead-left)"/>
+  
+  <!-- Reporting Tools Box -->
+  <g id="reporting">
+    <rect x="-260" y="305" width="180" height="70" rx="6" fill="#F3E5F5" stroke="#8E24AA" stroke-width="2"/>
+    <text x="-170" y="330" font-size="13" font-weight="600" text-anchor="middle" fill="#8E24AA">
+      Reporting Tools
+    </text>
+    <text x="-170" y="348" font-size="10" text-anchor="middle" fill="#666">
+      Power BI, Tableau
+    </text>
+    <text x="-170" y="363" font-size="10" text-anchor="middle" fill="#666">
+      Excel, Dashboards
+    </text>
+  </g>
+  
+  <!-- MCP Protocol Box (Right side) -->
+  <g id="mcp-layer">
+    <rect x="200" y="300" width="130" height="80" rx="8" fill="#FFF3E0" stroke="#F57C00" stroke-width="2"/>
+    <text x="265" y="330" font-size="14" font-weight="600" text-anchor="middle" fill="#F57C00">
+      MCP Server
+    </text>
+    <text x="265" y="350" font-size="10" text-anchor="middle" fill="#666">
+      JSON-RPC 2.0
+    </text>
+    <text x="265" y="365" font-size="10" text-anchor="middle" fill="#999">
+      AI Agents
+    </text>
+  </g>
+  
+  <!-- Arrows down from both REST and MCP to API Layer -->
+  <path d="M 115 380 L 115 420 L 190 420" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 265 380 L 265 420 L 190 420" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- API Layer -->
+  <g id="api-layer">
+    <rect x="50" y="430" width="280" height="80" rx="8" fill="#E8EAF6" stroke="#3F51B5" stroke-width="2"/>
+    <text x="190" y="460" font-size="16" font-weight="600" text-anchor="middle" fill="#3F51B5">
+      API Layer
+    </text>
+    <text x="190" y="480" font-size="11" text-anchor="middle" fill="#666">
+      ASP.NET Core 8.0
+    </text>
+    <text x="190" y="496" font-size="11" text-anchor="middle" fill="#999">
+      Routing | Auth | Validation
+    </text>
+  </g>
+  
+  <!-- Arrow down -->
+  <path d="M 190 510 L 190 550" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="220" y="535" font-size="12" fill="#666">Query Router</text>
+  
+  <!-- Business Logic Layer -->
+  <g id="business-layer">
+    <rect x="50" y="560" width="280" height="120" rx="8" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="2"/>
+    <text x="190" y="590" font-size="16" font-weight="600" text-anchor="middle" fill="#7B1FA2">
+      Business Logic
+    </text>
+    
+    <!-- Tools -->
+    <rect x="70" y="610" width="110" height="50" rx="4" fill="#fff" stroke="#7B1FA2" stroke-width="1"/>
+    <text x="125" y="640" font-size="12" font-weight="500" text-anchor="middle" fill="#333">Standard Queries</text>
+    
+    <rect x="200" y="610" width="110" height="50" rx="4" fill="#fff" stroke="#7B1FA2" stroke-width="1"/>
+    <text x="255" y="640" font-size="12" font-weight="500" text-anchor="middle" fill="#333">Custom Queries</text>
+  </g>
+  
+  <!-- Arrow down -->
+  <path d="M 190 680 L 190 730" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="230" y="710" font-size="12" fill="#666">Data Provider</text>
+  
+  <!-- Data Layer -->
+  <g id="data-layer">
+    <rect x="50" y="740" width="280" height="100" rx="8" fill="#E8F5E9" stroke="#388E3C" stroke-width="2"/>
+    <text x="190" y="770" font-size="16" font-weight="600" text-anchor="middle" fill="#388E3C">
+      BMS Integration
+    </text>
+    <text x="190" y="795" font-size="12" text-anchor="middle" fill="#666">
+      Visual FoxPro OleDB Driver
+    </text>
+    <text x="190" y="815" font-size="11" text-anchor="middle" fill="#999">
+      356 tables | 25,628+ fields
+    </text>
+  </g>
+  
+  <!-- PowerBroker Database -->
+  <g id="database">
+    <ellipse cx="190" cy="870" rx="100" ry="25" fill="#CFD8DC" stroke="#455A64" stroke-width="2"/>
+    <text x="190" y="875" font-size="14" font-weight="600" text-anchor="middle" fill="#263238">
+      PowerBroker DB
+    </text>
+  </g>
+  
+  <!-- Right Side: Key Features -->
+  <g id="features">
+    <text x="450" y="140" font-size="18" font-weight="600" fill="#1a1a1a">
+      Key Features
+    </text>
+    
+    <!-- Security -->
+    <g transform="translate(450, 170)">
+      <rect x="0" y="0" width="700" height="80" rx="6" fill="#fff" stroke="#e0e0e0" stroke-width="1.5"/>
+      <circle cx="25" cy="40" r="15" fill="#4CAF50"/>
+      <text x="25" y="45" font-size="18" text-anchor="middle" fill="#fff" font-weight="700">🔒</text>
+      <text x="55" y="30" font-size="15" font-weight="600" fill="#333">Microsoft Entra ID Authentication</text>
+      <text x="55" y="50" font-size="12" fill="#666">OAuth 2.0 enterprise authentication</text>
+      <text x="55" y="68" font-size="12" fill="#666">Enterprise-grade security for AI agent access</text>
+    </g>
+    
+    <!-- Real-time -->
+    <g transform="translate(450, 270)">
+      <rect x="0" y="0" width="700" height="80" rx="6" fill="#fff" stroke="#e0e0e0" stroke-width="1.5"/>
+      <circle cx="25" cy="40" r="15" fill="#2196F3"/>
+      <text x="25" y="45" font-size="18" text-anchor="middle" fill="#fff" font-weight="700">⚡</text>
+      <text x="55" y="30" font-size="15" font-weight="600" fill="#333">Live Data Access</text>
+      <text x="55" y="50" font-size="12" fill="#666">No exports, no syncs, no ETL pipelines</text>
+      <text x="55" y="68" font-size="12" fill="#666">Query live data in real-time through natural language</text>
+    </g>
+    
+    <!-- Cross-platform -->
+    <g transform="translate(450, 370)">
+      <rect x="0" y="0" width="700" height="80" rx="6" fill="#fff" stroke="#e0e0e0" stroke-width="1.5"/>
+      <circle cx="25" cy="40" r="15" fill="#FF9800"/>
+      <text x="25" y="45" font-size="18" text-anchor="middle" fill="#fff" font-weight="700">🔧</text>
+      <text x="55" y="30" font-size="15" font-weight="600" fill="#333">Pluggable Architecture</text>
+      <text x="55" y="50" font-size="12" fill="#666">Strategy Pattern: FoxPro provider (Windows) + CSV provider (dev/testing)</text>
+      <text x="55" y="68" font-size="12" fill="#666">Configuration-driven switching | Cross-platform development</text>
+    </g>
+    
+    <!-- Clean Architecture -->
+    <g transform="translate(450, 470)">
+      <rect x="0" y="0" width="700" height="80" rx="6" fill="#fff" stroke="#e0e0e0" stroke-width="1.5"/>
+      <circle cx="25" cy="40" r="15" fill="#9C27B0"/>
+      <text x="25" y="45" font-size="18" text-anchor="middle" fill="#fff" font-weight="700">📐</text>
+      <text x="55" y="30" font-size="15" font-weight="600" fill="#333">Clean Architecture Patterns</text>
+      <text x="55" y="50" font-size="12" fill="#666">Dependency Injection | Repository | Strategy | Result Pattern</text>
+      <text x="55" y="68" font-size="12" fill="#666">Interface Segregation | Layered design with clear boundaries</text>
+    </g>
+    
+    <!-- Tech Stack -->
+    <g transform="translate(450, 570)">
+      <rect x="0" y="0" width="700" height="150" rx="6" fill="#F5F5F5" stroke="#e0e0e0" stroke-width="1.5"/>
+      <text x="20" y="30" font-size="15" font-weight="600" fill="#333">Technology Stack</text>
+      
+      <text x="30" y="55" font-size="12" fill="#666">• .NET 8.0 / C# 12</text>
+      <text x="30" y="75" font-size="12" fill="#666">• ASP.NET Core Web API</text>
+      <text x="30" y="95" font-size="12" fill="#666">• Model Context Protocol (MCP)</text>
+      <text x="30" y="115" font-size="12" fill="#666">• JSON-RPC 2.0</text>
+      <text x="30" y="135" font-size="12" fill="#666">• Visual FoxPro OleDB</text>
+      
+      <text x="250" y="55" font-size="12" fill="#666">• Microsoft Entra ID</text>
+      <text x="250" y="75" font-size="12" fill="#666">• Dependency Injection</text>
+      <text x="250" y="95" font-size="12" fill="#666">• Result Pattern</text>
+      <text x="250" y="115" font-size="12" fill="#666">• Repository Pattern</text>
+      <text x="250" y="135" font-size="12" fill="#666">• Strategy Pattern</text>
+      
+      <text x="470" y="55" font-size="12" fill="#666">• Clean Architecture</text>
+      <text x="470" y="75" font-size="12" fill="#666">• Interface Segregation</text>
+      <text x="470" y="95" font-size="12" fill="#666">• Layered Design</text>
+    </g>
+  </g>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#666"/>
+    </marker>
+    <marker id="arrowhead-left" markerWidth="10" markerHeight="10" refX="1" refY="3" orient="auto">
+      <polygon points="10 0, 0 3, 10 6" fill="#666"/>
+    </marker>
+  </defs>
+</svg>
