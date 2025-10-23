@@ -22,6 +22,36 @@
   [context]
   (get-in context [:site-config :site-title] "My Site"))
 
+;; Hiccup building functions
+
+(defn- page-head
+  "Build the <head> section as hiccup."
+  [context]
+  (let [{:keys [title description]} context
+        css-paths (get-css-paths context)]
+    [:head
+     [:meta {:charset "utf-8"}]
+     [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
+     (when title [:title title])
+     (when description [:meta {:name "description" :content description}])
+     (for [css-path css-paths]
+       [:link {:rel "stylesheet" :href css-path}])]))
+
+(defn- page-header
+  "Build the header section as hiccup."
+  [context]
+  (let [site-title (get-site-title context)]
+    [:header
+     [:h1 site-title]
+     [:nav
+      [:a {:href (resolve-url context "/index.html")} "Home"]
+      [:a {:href (resolve-url context "/about.html")} "About"]]]))
+
+(defn- page-footer
+  "Build the footer section as hiccup."
+  [context]
+  [:footer [:p "© 2025"]])
+
 ;; Rendering functions
 
 (defn render-page
@@ -33,34 +63,22 @@
    - :site-config - Site configuration
    - :resolve-url - Function to resolve URLs relative to current page"
   [context]
-  (let [{:keys [title description content-html]} context
-        site-title (get-site-title context)
-        css-paths (get-css-paths context)
-        header-html (replicant/render
-                     [:header
-                      [:h1 site-title]
-                      [:nav
-                       [:a {:href (resolve-url context "/index.html")} "Home"]
-                       [:a {:href (resolve-url context "/about.html")} "About"]]])
-        footer-html (replicant/render [:footer [:p "© 2025"]])
-        head-html (replicant/render
-                   [:head
-                    [:meta {:charset "utf-8"}]
-                    [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
-                    (when title [:title title])
-                    (when description [:meta {:name "description" :content description}])
-                    (for [css-path css-paths]
-                      [:link {:rel "stylesheet" :href css-path}])])]
-    (str "<!DOCTYPE html>\n"
-         "<html lang=\"en\">"
-         head-html
-         "<body><div>"
-         header-html
-         "<main><div class=\"markdown-content\">"
-         content-html
-         "</div></main>"
-         footer-html
-         "</div></body></html>")))
+  (let [{:keys [content-html]} context
+        ;; Build page structure as hiccup, render the wrapper ONCE
+        page-wrapper [:html {:lang "en"}
+                      (page-head context)
+                      [:body
+                       [:div
+                        (page-header context)
+                        ;; Placeholder for content
+                        ::content-placeholder
+                        (page-footer context)]]]
+        wrapper-html (replicant/render page-wrapper)
+        ;; Replace placeholder with actual markdown HTML
+        final-html (str/replace wrapper-html
+                                (str (replicant/render ::content-placeholder))
+                                (str "<main>" content-html "</main>"))]
+    (str "<!DOCTYPE html>\n" final-html)))
 
 (defn render-post
   "Render a blog post with HTML content string.
@@ -71,14 +89,14 @@
    - Plus all keys from render-page"
   [context]
   (let [{:keys [title date content-html]} context
-        article-header (replicant/render
-                        [:article
+        ;; Build article wrapper, render once
+        article-wrapper [:article
                          [:h1 title]
-                         (when date [:time {:datetime date} date])])
-        ;; Remove the closing tags from article-header since we'll add content
-        article-start (str/replace article-header #"</article>$" "")
-        full-html (str article-start
-                      "<div class=\"markdown-content\">"
-                      content-html
-                      "</div></article>")]
-    (render-page (assoc context :content-html full-html))))
+                         (when date [:time {:datetime date} date])
+                         ::content-placeholder]
+        article-html (replicant/render article-wrapper)
+        ;; Replace placeholder with markdown HTML
+        final-article (str/replace article-html
+                                   (str (replicant/render ::content-placeholder))
+                                   content-html)]
+    (render-page (assoc context :content-html final-article))))
