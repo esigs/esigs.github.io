@@ -51,6 +51,22 @@
   [context]
   [:footer [:p "© 2025"]])
 
+(defn- posts-list
+  "Build a list of blog posts as hiccup."
+  [context posts]
+  (when (seq posts)
+    [:section.posts
+     [:h2 "Blog Posts"]
+     [:ul.post-list
+      (for [post posts]
+        [:li
+         [:article
+          [:h3 [:a {:href (resolve-url context (:url post))} (:title post)]]
+          (when (:date post)
+            [:time {:datetime (:date post)} (:date post)])
+          (when (:description post)
+            [:p (:description post)])]])]]))
+
 ;; Rendering functions
 
 (defn render-page
@@ -59,16 +75,20 @@
    - :title - Page title
    - :description - Meta description
    - :content-hiccup - Hiccup data structure for main content
+   - :posts - List of blog posts (optional, for index page)
    - :site-config - Site configuration
    - :resolve-url - Function to resolve URLs relative to current page"
   [context]
-  (let [{:keys [content-hiccup]} context]
+  (let [{:keys [content-hiccup posts]} context]
     (html5 {:lang "en"}
       (page-head context)
       [:body
        [:div
         (page-header context)
-        [:main content-hiccup]
+        [:main
+         content-hiccup
+         (when posts
+           (posts-list context posts))]
         (page-footer context)]])))
 
 (defn render-post

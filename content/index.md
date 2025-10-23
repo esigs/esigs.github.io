@@ -4,15 +4,15 @@ description: A personal website built with a custom static site generator
 layout: page
 ---
 
-# Hello world!
+# Welcome!
 
 This is my personal website, built with a custom **Clojure-based static site generator** using the Polylith architecture.
 
-## Features
+## About This Site
 
-- Markdown to HTML conversion
-- YAML frontmatter support
-- Replicant for server-side rendering
-- Composable Polylith components
+I built this using:
 
-Check out my [blog posts](posts/hello-world.html) to learn more!
+- **Clojure** and the **Polylith** architecture
+- **Hiccup** for server-side rendering
+- **markdown-to-hiccup** for markdown parsing
+- YAML frontmatter for metadata

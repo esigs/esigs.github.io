@@ -4,7 +4,20 @@
             [ca.ericsigurdson.template.interface :as template]
             [ca.ericsigurdson.file-utils.interface :as files]
             [clojure.string :as str]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io])
+  (:import [java.time.format DateTimeFormatter]
+           [java.time ZoneId]))
+
+;; Date Formatting
+
+(defn- format-date
+  "Format a date object to YYYY-MM-DD string."
+  [date]
+  (when date
+    (let [instant (.toInstant date)
+          zdt (.atZone instant (ZoneId/systemDefault))
+          formatter (DateTimeFormatter/ofPattern "MMMM d, yyyy")]
+      (.format zdt formatter))))
 
 ;; URL Utilities
 
@@ -55,29 +68,64 @@
         metadata (:metadata parsed)
         markdown-content (:content parsed)
         content-hiccup (renderer/markdown->hiccup markdown-content)
-        layout-type (get metadata "layout" "page")
+        layout-type (get metadata :layout "page")
+        ;; Merge metadata into context, preserving existing keys like :posts
         page-context (merge context
-                           {:title (get metadata "title" "Untitled")
-                            :description (get metadata "description")
-                            :date (get metadata "date")
+                           {:title (get metadata :title "Untitled")
+                            :description (get metadata :description)
+                            :date (format-date (get metadata :date))
                             :content-hiccup content-hiccup})]
     (case layout-type
       "post" (template/render-post page-context)
       "page" (template/render-page page-context)
       (template/render-page page-context))))
 
+;; Post Metadata Collection
+
+(defn- get-post-metadata
+  "Extract metadata from a blog post file."
+  [file-path url]
+  (let [content (files/read-file file-path)
+        parsed (parser/parse content)
+        metadata (:metadata parsed)]
+    {:url url
+     :title (get metadata :title "Untitled")
+     :date (format-date (get metadata :date))
+     :description (get metadata :description)
+     :layout (get metadata :layout "page")}))
+
+(defn- get-all-posts
+  "Get metadata for all blog posts in the posts directory."
+  [content-dir]
+  (let [posts-dir (str content-dir "/posts")
+        post-files (when (files/file-exists? posts-dir)
+                     (files/list-files posts-dir {:extension ".md"}))]
+    (->> post-files
+         (map (fn [file]
+                (let [url (path->url content-dir file)
+                      file-path (.getPath file)]
+                  (get-post-metadata file-path url))))
+         (filter :date)
+         (sort-by :date)
+         reverse
+         vec)))
+
 ;; Page Discovery
 
 (defn get-markdown-pages
   "Discover markdown files and return a map of URL -> page-fn."
   [content-dir]
-  (let [md-files (files/list-files content-dir {:extension ".md"})]
+  (let [md-files (files/list-files content-dir {:extension ".md"})
+        posts (get-all-posts content-dir)]
     (into {}
           (for [file md-files]
             (let [url (path->url content-dir file)
                   file-path (.getPath file)]
               [url (fn [context]
-                     (render-markdown-page context file-path))])))))
+                     (let [context-with-posts (if (= url "/index.html")
+                                                (assoc context :posts posts)
+                                                context)]
+                       (render-markdown-page context-with-posts file-path)))])))))
 
 (defn get-pages
   "Get all pages for the site as a map of URL -> content-fn.
