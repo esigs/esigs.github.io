@@ -19,7 +19,7 @@ All 25,000+ fields across 356 tables are accessible through both MCP tools and R
 
 And we managed to do it in real-time. Most people export to CSV files or duplicate the data into modern databases. We didn't. No exports. No syncs. No ETL pipelines. Just live data access through natural language.
 
-[![Architecture Diagram](../images/brokerdata-architecture.svg)](../images/brokerdata-architecture.svg)
+[![System architecture diagram showing ASP.NET Core API with pluggable data providers (FoxPro and CSV), MCP tools layer, and dual REST/MCP endpoint support for connecting legacy PowerBroker database to AI agents](../images/brokerdata-architecture.svg)](../images/brokerdata-architecture.svg)
 
 ## The Real Challenges
 
@@ -135,7 +135,7 @@ The legacy system keeps doing what it does best. We just get to build on top of 
 
 I enjoyed this project. When I finally hooked up Claude and queried the data directly from PowerBroker, it was pretty exciting.
 
-![Claude querying PowerBroker data](../images/claude-powerbroker-query.png)
+![Screenshot of Claude AI assistant querying customer and policy data from PowerBroker database via MCP protocol](../images/claude-powerbroker-query.png)
 
 Next up is making regular BI reporting intuitive and easy. The APIs are already built so it should be pretty painless.
 
