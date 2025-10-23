@@ -49,14 +49,14 @@
 (defn- page-footer
   "Build the footer section as hiccup."
   [context]
-  [:footer [:p "© 2025"]])
+  [:footer ])
 
 (defn- posts-list
   "Build a list of blog posts as hiccup."
   [context posts]
   (when (seq posts)
     [:section.posts
-     [:h2 "Blog Posts"]
+     [:h2 "What I'm working on:"]
      [:ul.post-list
       (for [post posts]
         [:li
