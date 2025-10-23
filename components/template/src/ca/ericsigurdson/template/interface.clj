@@ -19,7 +19,7 @@
 (defn- get-site-title
   "Get site title from config."
   [context]
-  (get-in context [:site-config :site-title] "My Site"))
+  (get-in context [:site-config :site-title] "Eric Sigurdson"))
 
 ;; Hiccup building functions
 

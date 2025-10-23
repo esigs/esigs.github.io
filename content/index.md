@@ -1,5 +1,5 @@
-{:title "Welcome to My Site"
- :description "A personal website built with a custom static site generator"
+{:title "Eric Sigurdson"
+ :description "Software developer specializing in functional programming and developer tooling"
  :layout "page"}
 
 # Welcome!

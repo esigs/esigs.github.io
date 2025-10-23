@@ -11,7 +11,7 @@
    ["-s" "--static-dir DIR" "Static assets directory"
     :default "static"]
    ["-t" "--site-title TITLE" "Site title"
-    :default "My Site"]
+    :default "Eric Sigurdson"]
    ["-h" "--help" "Show help"]])
 
 (defn -main

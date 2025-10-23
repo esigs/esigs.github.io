@@ -12,7 +12,7 @@
    {:content-dir "content"
     :output-dir "public"
     :static-dir "static"
-    :site-config {:site-title "My Site"
+    :site-config {:site-title "Eric Sigurdson"
                   :css ["/css/style.css"]}})
 
   ;; Quick generate with defaults
@@ -28,7 +28,7 @@
   (template/render-page
    {:title "Test Page"
     :content-hiccup [:div [:h1 "Hello"] [:p "World"]]
-    :site-config {:site-title "My Site"
+    :site-config {:site-title "Eric Sigurdson"
                   :css ["/css/style.css"]}
     :relative-path ""
     :resolve-url (fn [url] url)})
