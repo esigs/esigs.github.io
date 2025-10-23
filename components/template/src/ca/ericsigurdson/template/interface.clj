@@ -1,5 +1,5 @@
 (ns ca.ericsigurdson.template.interface
-  (:require [replicant.string :as replicant]))
+  (:require [hiccup.page :refer [html5]]))
 
 ;; Context-aware URL resolution
 
@@ -62,15 +62,14 @@
    - :site-config - Site configuration
    - :resolve-url - Function to resolve URLs relative to current page"
   [context]
-  (let [{:keys [content-hiccup]} context
-        page-hiccup [:html {:lang "en"}
-                     (page-head context)
-                     [:body
-                      [:div
-                       (page-header context)
-                       [:main content-hiccup]
-                       (page-footer context)]]]]
-    (str "<!DOCTYPE html>\n" (replicant/render page-hiccup))))
+  (let [{:keys [content-hiccup]} context]
+    (html5 {:lang "en"}
+      (page-head context)
+      [:body
+       [:div
+        (page-header context)
+        [:main content-hiccup]
+        (page-footer context)]])))
 
 (defn render-post
   "Render a blog post with hiccup content.

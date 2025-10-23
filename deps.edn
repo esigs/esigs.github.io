@@ -7,7 +7,7 @@
                                 "components/site-generator/src"]
 
                   :extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}
-                               no.cjohansen/replicant {:mvn/version "2025.06.21"}
+                               hiccup/hiccup {:mvn/version "1.0.5"}
                                markdown-to-hiccup/markdown-to-hiccup {:mvn/version "0.6.2"}
                                org.clojure/tools.cli {:mvn/version "1.1.230"}
                                io.forward/yaml {:mvn/version "1.0.11"}
