@@ -1,6 +1,6 @@
 {:title "Bridging Legacy Data and AI: Making 30-Year-Old Insurance Data Accessible to AI Agents"
  :description "How we built an MCP server to connect AI agents to PowerBroker's FoxPro database using clean architecture and modern .NET"
- :date #inst "2025-10-29"
+ :date #inst "2025-10-28"
  :layout "post"}
 
 If you've worked in insurance, you know that many brokerages run on systems built decades ago. Systems that contain invaluable customer data but weren't designed for modern integration needs. We built a prototype API to bridge 30-year-old PowerBroker FoxPro databases and modern AI agents.
@@ -9,7 +9,7 @@ If you've worked in insurance, you know that many brokerages run on systems buil
 
 ## What We Built
 
-Last week we built a production-ready ASP.NET Core API to expose data stored in Broker Management Systems (BMS). We started with PowerBroker, but the architecture works with any BMS provided you have access to your data.
+Last week we built a prototype ASP.NET Core API to expose data stored in Broker Management Systems (BMS). We started with PowerBroker, but the architecture works with any BMS provided you have access to your data.
 
 The API implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/), Anthropic's open standard for connecting AI assistants to data sources. With it, you can query legacy systems using AI agents like ChatGPT or Claude.
 
