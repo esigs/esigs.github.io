@@ -123,7 +123,7 @@
                   file-path (.getPath file)]
               [url (fn [context]
                      (let [context-with-posts (if (= url "/index.html")
-                                                (assoc context :posts posts)
+                                                (assoc context :posts posts :show-footer? false)
                                                 context)]
                        (render-markdown-page context-with-posts file-path)))])))))
 

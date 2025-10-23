@@ -50,11 +50,12 @@
   "Build the footer section as hiccup."
   [context]
   [:footer
-   [:hr]
-   [:div.author-bio
-    [:h3 "About Eric"]
-    [:p "I'm a software developer passionate about building bridges between legacy systems and modern technology. I work with Clojure and .NET/C#, focusing on clean architecture and practical solutions to real-world problems."]
-    [:p [:a {:href "https://www.linkedin.com/in/ericronaldsigurdson/" :target "_blank" :rel "noopener noreferrer"} "Connect with me on LinkedIn"] " to discuss legacy system modernization, AI integration, or anything related to software architecture."]]])
+   [:section.post-footer
+    [:hr]
+    [:div.author-bio
+     [:h3 "About Eric"]
+     [:p "I'm a software developer passionate about building bridges between legacy systems and modern technology. I work with Clojure and .NET/C#, focusing on clean architecture and practical solutions to real-world problems."]
+     [:p [:a {:href "https://www.linkedin.com/in/ericronaldsigurdson/" :target "_blank" :rel "noopener noreferrer"} "Connect with me on LinkedIn"] " to discuss legacy system modernization, AI integration, or anything related to software architecture."]]]])
 
 (defn- posts-list
   "Build a list of blog posts as hiccup."
@@ -81,10 +82,12 @@
    - :description - Meta description
    - :content-hiccup - Hiccup data structure for main content
    - :posts - List of blog posts (optional, for index page)
+   - :show-footer? - Whether to show footer (default: true)
    - :site-config - Site configuration
    - :resolve-url - Function to resolve URLs relative to current page"
   [context]
-  (let [{:keys [content-hiccup posts]} context]
+  (let [{:keys [content-hiccup posts show-footer?]} context
+        show-footer? (if (nil? show-footer?) true show-footer?)]
     (html5 {:lang "en"}
       (page-head context)
       [:body
@@ -94,7 +97,8 @@
          content-hiccup
          (when posts
            (posts-list context posts))]
-        (page-footer context)]])))
+        (when show-footer?
+          (page-footer context))]])))
 
 (defn render-post
   "Render a blog post with hiccup content.
