@@ -1,6 +1,5 @@
 (ns ca.ericsigurdson.template.interface
-  (:require [replicant.string :as replicant]
-            [clojure.string :as str]))
+  (:require [replicant.string :as replicant]))
 
 ;; Context-aware URL resolution
 
@@ -55,48 +54,35 @@
 ;; Rendering functions
 
 (defn render-page
-  "Render a page with HTML content string.
+  "Render a page with hiccup content.
    Context keys:
    - :title - Page title
    - :description - Meta description
-   - :content-html - HTML string for main content
+   - :content-hiccup - Hiccup data structure for main content
    - :site-config - Site configuration
    - :resolve-url - Function to resolve URLs relative to current page"
   [context]
-  (let [{:keys [content-html]} context
-        ;; Build page structure as hiccup, render the wrapper ONCE
-        page-wrapper [:html {:lang "en"}
-                      (page-head context)
-                      [:body
-                       [:div
-                        (page-header context)
-                        ;; Placeholder for content
-                        ::content-placeholder
-                        (page-footer context)]]]
-        wrapper-html (replicant/render page-wrapper)
-        ;; Replace placeholder with actual markdown HTML
-        final-html (str/replace wrapper-html
-                                (str (replicant/render ::content-placeholder))
-                                (str "<main>" content-html "</main>"))]
-    (str "<!DOCTYPE html>\n" final-html)))
+  (let [{:keys [content-hiccup]} context
+        page-hiccup [:html {:lang "en"}
+                     (page-head context)
+                     [:body
+                      [:div
+                       (page-header context)
+                       [:main content-hiccup]
+                       (page-footer context)]]]]
+    (str "<!DOCTYPE html>\n" (replicant/render page-hiccup))))
 
 (defn render-post
-  "Render a blog post with HTML content string.
+  "Render a blog post with hiccup content.
    Context keys:
    - :title - Post title
    - :date - Publication date
-   - :content-html - HTML string for post content
+   - :content-hiccup - Hiccup data structure for post content
    - Plus all keys from render-page"
   [context]
-  (let [{:keys [title date content-html]} context
-        ;; Build article wrapper, render once
-        article-wrapper [:article
-                         [:h1 title]
-                         (when date [:time {:datetime date} date])
-                         ::content-placeholder]
-        article-html (replicant/render article-wrapper)
-        ;; Replace placeholder with markdown HTML
-        final-article (str/replace article-html
-                                   (str (replicant/render ::content-placeholder))
-                                   content-html)]
-    (render-page (assoc context :content-html final-article))))
+  (let [{:keys [title date content-hiccup]} context
+        article-hiccup [:article
+                        [:h1 title]
+                        (when date [:time {:datetime date} date])
+                        content-hiccup]]
+    (render-page (assoc context :content-hiccup article-hiccup))))

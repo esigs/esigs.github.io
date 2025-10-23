@@ -1,7 +1,9 @@
 (ns ca.ericsigurdson.html-renderer.interface
-  (:require [markdown.core :as md]))
+  (:require [markdown-to-hiccup.core :as md]))
 
-(defn markdown->html
-  "Convert markdown string to HTML string."
+(defn markdown->hiccup
+  "Convert markdown string to hiccup data structure."
   [markdown]
-  (md/md-to-html-string markdown))
+  (->> markdown
+       md/md->hiccup
+       md/component))

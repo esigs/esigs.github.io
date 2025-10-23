@@ -54,13 +54,13 @@
         parsed (parser/parse content)
         metadata (:metadata parsed)
         markdown-content (:content parsed)
-        content-html (renderer/markdown->html markdown-content)
+        content-hiccup (renderer/markdown->hiccup markdown-content)
         layout-type (get metadata "layout" "page")
         page-context (merge context
                            {:title (get metadata "title" "Untitled")
                             :description (get metadata "description")
                             :date (get metadata "date")
-                            :content-html content-html})]
+                            :content-hiccup content-hiccup})]
     (case layout-type
       "post" (template/render-post page-context)
       "page" (template/render-page page-context)

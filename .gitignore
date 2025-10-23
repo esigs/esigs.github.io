@@ -15,6 +15,7 @@ dist/
 build/
 public/
 .cache/
+.cpcache/
 
 # OS
 .DS_Store
