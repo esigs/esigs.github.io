@@ -4,7 +4,7 @@ description: A personal website built with a custom static site generator
 layout: page
 ---
 
-# Welcome!
+# Hello world!
 
 This is my personal website, built with a custom **Clojure-based static site generator** using the Polylith architecture.
 
