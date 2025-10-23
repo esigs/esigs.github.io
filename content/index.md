@@ -1,8 +1,6 @@
----
-title: Welcome to My Site
-description: A personal website built with a custom static site generator
-layout: page
----
+{:title "Welcome to My Site"
+ :description "A personal website built with a custom static site generator"
+ :layout "page"}
 
 # Welcome!
 

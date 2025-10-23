@@ -1,8 +1,6 @@
----
-title: About Me
-description: Learn more about me and this site
-layout: page
----
+{:title "About Me"
+ :description "Learn more about me and this site"
+ :layout "page"}
 
 # About Me
 

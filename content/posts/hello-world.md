@@ -1,9 +1,7 @@
----
-title: Hello World - First Post
-description: My first blog post
-date: 2025-10-23
-layout: post
----
+{:title "Hello World - First Post"
+ :description "My first blog post"
+ :date #inst "2025-10-23"
+ :layout "post"}
 
 # Hello World!
 

@@ -140,7 +140,6 @@ Project dependencies are managed in `deps.edn`:
 - Polylith CLI tools 0.2.21
 - Hiccup 1.0.5 - HTML rendering library (hiccup data structures to HTML)
 - markdown-to-hiccup 0.6.2 - Markdown to hiccup conversion
-- io.forward/yaml 1.0.11 - YAML parsing for frontmatter
 - tools.cli 1.1.230 - Command-line argument parsing
 - nREPL 1.3.1 - REPL server for editor integration
 
@@ -150,7 +149,7 @@ This workspace contains a complete static site generator built using the Polylit
 
 ### Components
 
-- **markdown-parser** - Parses markdown files with YAML frontmatter using io.forward/yaml. Extracts metadata (title, date, description, layout) and content.
+- **markdown-parser** - Extracts EDN frontmatter from markdown files. Uses native `clojure.edn/read` to parse metadata (title, date, description, layout) and separates content.
 
 - **html-renderer** - Converts markdown to hiccup data structures using markdown-to-hiccup library.
 
@@ -202,15 +201,13 @@ public/           # Generated site (output)
 
 ### Markdown File Format
 
-Markdown files support YAML frontmatter:
+Markdown files support EDN frontmatter:
 
 ```markdown
----
-title: Page Title
-description: Page description for meta tags
-date: 2025-10-23
-layout: page  # or "post" for blog posts
----
+{:title "Page Title"
+ :description "Page description for meta tags"
+ :date #inst "2025-10-23"
+ :layout "page"}  ; or "post" for blog posts
 
 # Content
 
@@ -222,6 +219,7 @@ Your markdown content here...
 - Components do not declare dependencies on other components in their `deps.edn` files
 - Dependencies between bricks are managed in the root `deps.edn` under the `:dev` alias with `:local/root` references
 - External library dependencies are declared in the root `deps.edn`
+- EDN frontmatter for metadata (more idiomatic than YAML, no external parser needed)
 - Hiccup's `html5` function is used for server-side rendering, converting pure hiccup data structures to HTML strings with DOCTYPE
 - Markdown is converted to hiccup data structures (not HTML strings), maintaining data-first approach throughout
 - Context-aware URL resolution handles relative paths for nested pages automatically
