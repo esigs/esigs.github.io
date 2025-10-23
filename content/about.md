@@ -4,9 +4,18 @@
 
 # About Me
 
-Hi! I'm Eric, a software developer with a passion for functional programming and developer tooling.
+Hi! I'm Eric, a software developer who builds practical solutions to real problems. I'm passionate about functional programming and clean architecture, but pragmatic about tech choices.
 
-I work primarily with **Clojure** and **.NET/C#**, building robust systems and improving developer workflows. I'm a big believer in Rich Hickey's philosophy of simplicity and have a deep appreciation for functional programming principles.
+I work with whatever gets the job done: **Clojure**, **.NET/C#**, legacy systems, cloud platforms, you name it. Recent projects include bridging 30-year-old FoxPro databases to modern AI agents and building composable systems with Polylith.
+
+I'm a big believer in Rich Hickey's philosophy of [simplicity](https://www.youtube.com/watch?v=SxdOUGdseq4), but I'm just as comfortable writing C# in Visual Studio as I am writing Clojure in Vim.
+
+## Tech I work with regularly:
+
+- **Languages**: Clojure, C#, Javascript/Typescript, Python 🤮
+- **Databases**: SQL Server, Postgres, Datomic, even FoxPro when needed
+- **Infrastructure**: Docker, Nix, Azure (mostly), some AWS/GCP when needed
+- **Philosophy**: Functional programming principles, clean architecture, no rip-and-replace projects
 
 When I'm not writing code, I'm usually tinkering with:
 - **Linux systems** (I use Arch btw)
