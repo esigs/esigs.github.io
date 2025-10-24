@@ -1,6 +1,6 @@
 {:title "Bridging Legacy Data and AI: Making 30-Year-Old Insurance Data Accessible to AI Agents"
  :description "How we built an MCP server to connect AI agents to PowerBroker's FoxPro database using clean architecture and modern .NET"
- :date #inst "2025-10-28"
+ :date #inst "2025-10-24"
  :layout "post"}
 
 If you've worked in insurance, you know that many brokerages run on systems built decades ago. Systems that contain invaluable customer data but weren't designed for modern integration needs. We built a prototype API to bridge 30-year-old PowerBroker FoxPro databases and modern AI agents.
