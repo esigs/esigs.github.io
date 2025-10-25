@@ -34,7 +34,8 @@
      (when title [:title title])
      (when description [:meta {:name "description" :content description}])
      (for [css-path css-paths]
-       [:link {:rel "stylesheet" :href css-path}])]))
+       [:link {:rel "stylesheet" :href css-path}])
+     [:link {:rel "stylesheet" :href (resolve-url context "/css/highlight.min.css")}]]))
 
 (defn- page-header
   "Build the header section as hiccup."
@@ -102,7 +103,9 @@
          (when posts
            (posts-list context posts))]
         (when show-footer?
-          (page-footer context))]])))
+          (page-footer context))]
+       [:script {:src (resolve-url context "/js/highlight.min.js")}]
+       [:script "hljs.highlightAll();"]])))
 
 (defn render-post
   "Render a blog post with hiccup content.
