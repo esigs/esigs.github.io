@@ -1,7 +1,9 @@
 {:title "Automating lead ingestion for Applied Epic via n8n" 
-:description "It's not a secret that there is a lot of double entry in the broker world. Double entry and re-typing data are gigantic wastes of time. I wanted to remove some of that for a client by bridging their website with Applied Epic directly using modern tooling." 
+:description "Wiring up Wordpress to Applied Epic for automatic Lead ingestion via n8n" 
 :date #inst "2025-12-09" 
 :layout "post"}
+
+It's not a secret that there is a lot of double entry in the broker world. Double entry and re-typing data are gigantic wastes of time. I wanted to remove some of that for a client by bridging their website with Applied Epic directly using modern tooling.
 
 [![n8n workflow demonstrating collecting form data from Wordpress and pushing to Applied Epic](../images/wordpress-n8n-applied-workflow.jpeg)](../images/wordpress-n8n-applied-workflow.jpeg)
 
