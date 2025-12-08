@@ -69,7 +69,7 @@
     [:section.posts
      [:h2 "What I'm working on:"]
      [:ul.post-list
-      (for [post posts]
+      (for [post (sort-by :date posts)]
         [:li
          [:article
           [:h3 [:a {:href (resolve-url context (:url post))} (:title post)]]
