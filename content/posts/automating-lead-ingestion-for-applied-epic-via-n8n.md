@@ -16,9 +16,9 @@ I decided to implement this using *n8n* for two reasons.
 1. It's all the rage and I wanted to know what it was.
 2. If it lives up to the hype, we can build the form ingestion once, and then the business can leverage this for all sorts of workflows without engaging a developer.
 
-To make it easy to share, I setup it up running in docker via `docker-compose`.
+I setup it up in docker via `docker-compose`.
 
-The whole flow is simple: Ninja Forms captures the data; our custom plugin (the "Courier") ships posts it to a webhook in n8n; and n8n orchestrates the auth handshake with Applied, then creates a new Client, and posts the Opportunity.
+The whole flow is simple: Ninja Forms captures the data; our custom plugin (the "Courier") posts it to a webhook in n8n; and n8n orchestrates the auth handshake with Applied, then creates a new Client, and posts the Opportunity.
 
 ## The Real Challenges
 
@@ -134,11 +134,15 @@ class NF_Action_n8n_Courier extends NF_Abstracts_Action {
 
 This approach keeps the integration clean and decoupled from the front-end logic, while giving full control over the data flow from WordPress → n8n → Applied Epic.
 
-It also means we don't need to touch the Ninja Forms tooling that is popular with many Wordpress sites.
+It also means we don't need to touch the Ninja Forms tooling that is popular with many WordPresss sites.
 
 ## Clean Architecture
 
 Because we never complected the logic inside the WordPress forms, and by placing n8n in between, the integration is fully pluggable. If we want to replace Applied Epic with another BMS tomorrow, we just update the n8n workflow—the frontend doesn’t need to change. Who knew separation of concerns was so powerful.
+
+## Key Takeaways
+- *n8n is quick to get going:* It’s really fast to set up and start automating things. I prefer a REPL myself, but for non-developer audiences, it’s a great way to get basic workflows and integrations running without writing a lot of code. I'm not surprised everyone is talking about it.
+- *Potential for an unofficial Applied Epic plugin:* I’m interested in building a plugin that handles auth and lets you post/query Applied Epic right out of the box. That would make creating and maintaining workflows much faster.
 
 ## The Repo
 
